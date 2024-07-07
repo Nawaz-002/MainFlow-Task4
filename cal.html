@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Calculator</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: rgba(35, 61, 61, 0.562);
+      }
+      #Calculator {
+        width: 335px;
+        height: 550px;
+        border: 1px solid #717377;
+        padding: 20px;
+        background: linear-gradient(45deg, #0a0a0a, #3a4452);
+        border-radius: 16px;
+        box-shadow: 5px 5px 5px rgb(55, 70, 70);
+      }
+      input {
+        border: none;
+        width: 315px;
+        height: 150px;
+        background: transparent;
+        font-size: 50px;
+        color: #ffffff;
+        text-align:right;
+        outline: none;
+        padding: 0 10px 0 10px;
+      }
+      input::placeholder {
+        text-align: right;
+        color: #ffffff;
+      }
+      button {
+        width: 60px;
+        height: 60px;
+        margin: 10px;
+        border: none;
+        border-radius: 50%;
+        font-size: 24px;
+        background-color: #3d3e41;
+        color: #ffffff;
+        box-shadow: 5px 5px 5px rgb(55, 70, 70);
+        cursor: pointer;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div id="Calculator">
+      <input
+        type="text"
+        id="display"
+        placeholder="0"
+        onchange="displaycontent()"
+      />
+      <div>
+        <button
+          style="background-color: aquamarine; color: black"
+          id="AC"
+          onclick="cleardisplay()"
+        >
+          AC
+        </button>
+        <button
+          style="background-color: aquamarine; color: black"
+          id="DEL"
+          onclick="onedelete()"
+        >
+          DEL
+        </button>
+        <button
+          style="background-color: aquamarine; color: black"
+          onclick="appendoperator('%')"
+        >
+          %
+        </button>
+        <button
+          style="background-color: aquamarine; color: black"
+          onclick="appendoperator('/')"
+        >
+          /
+        </button>
+
+        <button onclick="appendnumber('7')">7</button>
+        <button onclick="appendnumber('8')">8</button>
+        <button onclick="appendnumber('9')">9</button>
+        <button
+          style="background-color: aquamarine; color: black; padding-top: 5px"
+          onclick="appendoperator('*')"
+        >
+          x
+        </button>
+
+        <button onclick="appendnumber('4')">4</button>
+        <button onclick="appendnumber('5')">5</button>
+        <button onclick="appendnumber('6')">6</button>
+        <button
+          style="background-color: aquamarine; color: black"
+          onclick="appendoperator('-')"
+        >
+          -
+        </button>
+
+        <button onclick="appendnumber('1')">1</button>
+        <button onclick="appendnumber('2')">2</button>
+        <button onclick="appendnumber('3')">3</button>
+        <button
+          style="background-color: aquamarine; color: black"
+          onclick="appendoperator('+')"
+        >
+          +
+        </button>
+
+        <button onclick="appendnumber('00')">00</button>
+        <button onclick="appendnumber('0')">0</button>
+        <button onclick="appendnumber('.')">.</button>
+        <button
+          style="background-color: rgba(194, 115, 25, 1)"
+          onclick="calculate()"
+        >
+          =
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let expression = "";
+
+      function appendnumber(num) {
+        expression += num;
+        document.querySelector("#display").value = expression;
+      }
+
+      function onedelete() {
+        if (expression.length > 0) {
+          expression = expression.slice(0, -1);
+          document.querySelector("#display").value = expression;
+        }
+      }
+
+      function appendoperator(op) {
+        expression += op;
+        document.querySelector("#display").value = expression;
+      }
+
+      function cleardisplay() {
+        expression = "";
+        document.querySelector("#display").value = "";
+      }
+
+      function calculate() {
+        try {
+          let result = eval(expression);
+          expression = result.toString();
+          document.querySelector("#display").value = expression;
+        } catch (error) {
+          if (error instanceof SyntaxError) {
+            expression = "Syntax Error!";
+            document.querySelector("#display").value = expression;
+          } else {
+            alert("Error during calculation!");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
